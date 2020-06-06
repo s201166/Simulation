@@ -106,9 +106,16 @@ export class Simulate {
       //@ts-ignore
       let immune = animal.condition.immune;
 
-      if (immune > 1)
+      if (immune == 2)
         return new Animal(age, { healthy: true, immune: 0 }, pregnantPhase);
 
+      if (immune == 0)
+        return new Animal(
+          age, //@ts-ignore
+          { healthy: true, immune: 0 },
+          pregnantPhase
+        );
+      //1 OK
       return new Animal(
         age, //@ts-ignore
         { healthy: true, immune: immune + 1 },

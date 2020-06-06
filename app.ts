@@ -2,33 +2,24 @@ import { AnimalType } from "./src/Animal";
 import { data } from "./src/InitialData";
 import { Simulate } from "./Simulate";
 
-type smth = {
-  age: number;
-  healthy: number;
-  healthyAndImmune: number;
-  sickFirstPhase: number;
-  sickSecondPhase: number;
-};
-
-const healthy = () => {};
-const healthyAndImmune = () => {};
-const sickFirstPhase = () => {};
-const sickSecondPhase = () => {};
-
 const formatData = (arr: any) => {
   console.table(
     arr.reduce(
       function (ageCounts: { [key: string]: number }, animal: AnimalType) {
-        //if (animal.condition.healthy === false) ageCounts[animal.age]++;
-
+        // 0 -> immune == false
+        // 1 -> just got it == false
+        // 2 -> immune == true
         if (animal.condition.healthy) {
           //@ts-ignore
-          if (animal.condition.immune) {
+          if (animal.condition.immune == 2) {
             //@ts-ignore
             ageCounts[animal.age - 1].healthyAndImmune++;
           } else {
             //@ts-ignore
-            ageCounts[animal.age - 1].healthy++;
+            if (animal.condition.immune == 0) {
+              //@ts-ignore
+              ageCounts[animal.age - 1].healthy++;
+            }
           }
         } else {
           //@ts-ignore
@@ -40,10 +31,6 @@ const formatData = (arr: any) => {
             ageCounts[animal.age - 1].sickSecondPhase++;
           }
         }
-
-        //console.log(ageCounts);
-        //  ageCounts[animal.age]++;
-
         return ageCounts;
       },
       [
@@ -101,21 +88,6 @@ const formatData = (arr: any) => {
   );
 };
 
-/*
-const formatData = (arr: any) => {
-  console.table(
-    arr.reduce(
-      function (ageCounts: { [key: string]: number }, animal: any) {
-        //if (animal.condition.healthy === false) ageCounts[animal.age]++;
-        ageCounts[animal.age]++;
-
-        return ageCounts;
-      },
-      { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0 }
-    )
-  );
-};
-*/
 const main = (animals: AnimalType[]) => {
   const sickAnimalsSortedByAge = Simulate.getAmountOfSickAnimalsInSameAge(
     animals
@@ -153,14 +125,18 @@ const main = (animals: AnimalType[]) => {
   });
 
   const flatternPregnancy = pregnancy.flat();
-  console.log(flatternPregnancy.length);
+  // console.log(flatternPregnancy);
   formatData(flatternPregnancy);
-  //console.table(flatternPregnancy);
 
   return flatternPregnancy;
 };
 
+console.log("Initial values");
 formatData(data);
-const result = main(data);
-const result1 = main(result);
-main(result1);
+
+let animals = data;
+
+for (let i = 1; i < 11; i++) {
+  console.log(`Herd after ${i} year`);
+  animals = main(animals);
+}

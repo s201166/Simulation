@@ -9,7 +9,7 @@ export const data: AnimalType[] = [
   }),
   ...AnimalFactory.createAnimals(20, {
     age: 1,
-    condition: { healthy: true, immune: 1 },
+    condition: { healthy: true, immune: 2 },
     pregnantPhase: 0,
   }),
   ...AnimalFactory.createAnimals(10, {
@@ -32,7 +32,7 @@ export const data: AnimalType[] = [
 
   ...AnimalFactory.createAnimals(30, {
     age: 2,
-    condition: { healthy: true, immune: 1 },
+    condition: { healthy: true, immune: 2 },
     pregnantPhase: 0,
   }),
 
@@ -56,7 +56,7 @@ export const data: AnimalType[] = [
 
   ...AnimalFactory.createAnimals(10, {
     age: 3,
-    condition: { healthy: true, immune: 1 },
+    condition: { healthy: true, immune: 2 },
     pregnantPhase: 0,
   }),
 
@@ -80,7 +80,7 @@ export const data: AnimalType[] = [
 
   ...AnimalFactory.createAnimals(10, {
     age: 4,
-    condition: { healthy: true, immune: 1 },
+    condition: { healthy: true, immune: 2 },
     pregnantPhase: 0,
   }),
 
@@ -104,7 +104,7 @@ export const data: AnimalType[] = [
 
   ...AnimalFactory.createAnimals(20, {
     age: 5,
-    condition: { healthy: true, immune: 1 },
+    condition: { healthy: true, immune: 2 },
     pregnantPhase: 0,
   }),
 
@@ -128,7 +128,7 @@ export const data: AnimalType[] = [
 
   ...AnimalFactory.createAnimals(5, {
     age: 6,
-    condition: { healthy: true, immune: 1 },
+    condition: { healthy: true, immune: 2 },
     pregnantPhase: 0,
   }),
 
