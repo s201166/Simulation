@@ -6,9 +6,12 @@ node is required
 
 ## Installation
 
+```bash
 -clone repo
 -npm install
 -npm run start:dev
+
+```
 
 ## Requirements
 
