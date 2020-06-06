@@ -1,6 +1,6 @@
 import { AnimalType } from "./src/Animal";
 import { data } from "./src/InitialData";
-import { Simulate } from "./Simulate";
+import { Simulate } from "./src/Simulate";
 
 const formatData = (arr: any) => {
   console.table(
@@ -102,6 +102,7 @@ const main = (animals: AnimalType[]) => {
   const afterFlat = birth.flat(2);
 
   const recovery = afterFlat.map((animal) => {
+    //@ts-ignore
     return animal.condition.healthy === false && animal.condition.phase === 2
       ? Simulate.recovery(animal)
       : animal;

@@ -1,4 +1,4 @@
-import { Animal, AnimalType } from "./src/Animal";
+import { Animal, AnimalType } from "./Animal";
 
 export class Simulate {
   static random = (min: number, max: number) => {
