@@ -1,4 +1,10 @@
 This is simulation of spreading epidemic.
 
-To run a program, install typescript compiler, and node environemnt.
-Compile app.ts file, then run a program by typing node app
+###
+
+node is required
+
+To run a program:
+-clone repo
+-npm install
+-npm run start:dev
