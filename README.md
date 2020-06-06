@@ -1,10 +1,15 @@
-This is simulation of spreading epidemic.
+# Simulation
 
-###
+This is simulation of spreading epidemic.
 
 node is required
 
-To run a program:
+## Installation
+
 -clone repo
 -npm install
 -npm run start:dev
+
+## Requirements
+
+-node.js
