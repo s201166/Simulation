@@ -1,4 +1,4 @@
-import { Animal, AnimalType } from "./Animal";
+import { Animal, AnimalType, Sick } from "./Animal";
 
 export class Simulate {
   static random = (min: number, max: number) => {
@@ -23,37 +23,31 @@ export class Simulate {
     ];
 
     if (animal.condition.healthy === false) {
-      if (Simulate.probability(ages[animal.age] * 0.01)) {
+      if (Simulate.probability(ages[animal.age] * 0.01))
         data.push(new Animal(0, { healthy: false, phase: 1 }, 0));
-      } else {
-        data.push(new Animal(0, { healthy: true, immune: 0 }, 0));
-      }
-    } else {
-      data.push(new Animal(0, { healthy: true, immune: 0 }, 0));
-    }
+      else data.push(new Animal(0, { healthy: true, immune: 0 }, 0));
+    } else data.push(new Animal(0, { healthy: true, immune: 0 }, 0));
 
     return [...data];
   }
 
   static getPregnant(animal: AnimalType) {
     if (animal.age >= 2 && animal.age <= 4) {
-      if (Simulate.probability(Simulate.random(13, 18) * 0.01)) {
+      if (Simulate.probability(Simulate.random(13, 18) * 0.01))
         return new Animal(
           animal.age,
           animal.condition,
           (animal.pregnantPhase = 1)
         );
-      } else return animal;
     }
 
     if (animal.age > 4)
-      if (Simulate.probability(Simulate.random(9, 12) * 0.01)) {
+      if (Simulate.probability(Simulate.random(9, 12) * 0.01))
         return new Animal(
           animal.age,
           animal.condition,
           (animal.pregnantPhase = 1)
         );
-      } else return animal;
 
     return animal;
   }
@@ -71,20 +65,14 @@ export class Simulate {
 
   static naturalDeath(animal: AnimalType) {
     if (animal.age >= 1 && animal.age <= 3) {
-      if (Simulate.probability(Simulate.random(15, 26) * 0.01)) {
-        return [];
-      } else return animal;
+      if (Simulate.probability(Simulate.random(15, 26) * 0.01)) return [];
     }
     if (animal.age >= 4 && animal.age <= 5) {
-      if (Simulate.probability(Simulate.random(23, 38) * 0.01)) {
-        return [];
-      } else return animal;
+      if (Simulate.probability(Simulate.random(23, 38) * 0.01)) return [];
     }
 
     if (animal.age === 6) {
-      if (Simulate.probability(Simulate.random(35, 66) * 0.01)) {
-        return [];
-      } else return animal;
+      if (Simulate.probability(Simulate.random(35, 66) * 0.01)) return [];
     }
 
     if (animal.age === 7) return [];

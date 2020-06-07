@@ -11,7 +11,7 @@ type Healthy = {
   immune: number;
 };
 
-type Sick = {
+export type Sick = {
   healthy: boolean;
   phase: number;
 };
