@@ -17,8 +17,7 @@ export class SimulationProcess {
     const afterFlat = birth.flat(2);
 
     const recovery = afterFlat.map((animal) => {
-      //@ts-ignore
-      return animal.condition.healthy === false && animal.condition.phase === 2
+      return animal.condition.health === "sick" && animal.condition.phase === 2
         ? Simulate.recovery(animal)
         : animal;
     });
@@ -41,7 +40,7 @@ export class SimulationProcess {
     });
 
     const flatternPregnancy = pregnancy.flat();
-    // console.log(flatternPregnancy);
+
     DisplayData.formatSimulationResult(flatternPregnancy);
 
     return flatternPregnancy;

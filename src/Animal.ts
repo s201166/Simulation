@@ -7,12 +7,12 @@ export type AnimalType = {
 type AnimalCondition = Healthy | Sick;
 
 type Healthy = {
-  healthy: boolean;
+  health: "healthy";
   immune: number;
 };
 
-export type Sick = {
-  healthy: boolean;
+type Sick = {
+  health: "sick";
   phase: number;
 };
 

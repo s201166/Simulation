@@ -1,4 +1,4 @@
-import { Animal, AnimalType, Sick } from "./Animal";
+import { Animal, AnimalType } from "./Animal";
 
 export class Simulate {
   static random = (min: number, max: number) => {
@@ -9,7 +9,7 @@ export class Simulate {
   static getAmountOfSickAnimalsInSameAge(animals: AnimalType[]) {
     return animals.reduce(
       function (ageCounts: { [key: string]: number }, animal) {
-        if (animal.condition.healthy === false) ageCounts[animal.age]++;
+        if (animal.condition.health === "sick") ageCounts[animal.age]++;
 
         return ageCounts;
       },
@@ -22,11 +22,11 @@ export class Simulate {
       new Animal(animal.age, animal.condition, (animal.pregnantPhase = 0)),
     ];
 
-    if (animal.condition.healthy === false) {
+    if (animal.condition.health === "healthy") {
       if (Simulate.probability(ages[animal.age] * 0.01))
-        data.push(new Animal(0, { healthy: false, phase: 1 }, 0));
-      else data.push(new Animal(0, { healthy: true, immune: 0 }, 0));
-    } else data.push(new Animal(0, { healthy: true, immune: 0 }, 0));
+        data.push(new Animal(0, { health: "sick", phase: 1 }, 0));
+      else data.push(new Animal(0, { health: "healthy", immune: 0 }, 0));
+    } else data.push(new Animal(0, { health: "healthy", immune: 0 }, 0));
 
     return [...data];
   }
@@ -56,7 +56,7 @@ export class Simulate {
     if (!!Simulate.random(0, 2))
       return new Animal(
         animal.age,
-        { healthy: true, immune: 1 },
+        { health: "healthy", immune: 1 },
         animal.pregnantPhase
       );
 
@@ -87,32 +87,24 @@ export class Simulate {
   static onTimePasses(animal: AnimalType) {
     const age = Simulate.getOlder(animal.age);
     let pregnantPhase = animal.pregnantPhase;
-    let condition = animal.condition.healthy;
     if (pregnantPhase > 0) pregnantPhase++;
 
-    if (condition) {
-      //@ts-ignore
+    if (animal.condition.health === "healthy") {
       let immune = animal.condition.immune;
 
-      if (immune == 2)
-        return new Animal(age, { healthy: true, immune: 0 }, pregnantPhase);
-
-      if (immune == 0)
+      if (immune == 1)
         return new Animal(
-          age, //@ts-ignore
-          { healthy: true, immune: 0 },
+          age,
+          { health: "healthy", immune: immune + 1 },
           pregnantPhase
         );
-      //1 OK
+
+      return new Animal(age, { health: "healthy", immune: 0 }, pregnantPhase);
+    } else
       return new Animal(
-        age, //@ts-ignore
-        { healthy: true, immune: immune + 1 },
+        age,
+        { health: "sick", phase: animal.condition.phase + 1 },
         pregnantPhase
       );
-    }
-    //@ts-ignore
-    const sickPhase = Number(animal.condition.phase) + 1;
-
-    return new Animal(age, { healthy: false, phase: sickPhase }, pregnantPhase);
   }
 }

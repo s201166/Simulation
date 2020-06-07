@@ -8,20 +8,17 @@ export class DisplayData {
           // 0 -> immune == false
           // 1 -> just got it == false
           // 2 -> immune == true
-          if (animal.condition.healthy) {
-            //@ts-ignore
+          if (animal.condition.health === "healthy") {
             if (animal.condition.immune == 2) {
               //@ts-ignore
               ageCounts[animal.age - 1].healthyAndImmune++;
-            } else {
+            }
+
+            if (animal.condition.immune == 0) {
               //@ts-ignore
-              if (animal.condition.immune == 0) {
-                //@ts-ignore
-                ageCounts[animal.age - 1].healthy++;
-              }
+              ageCounts[animal.age - 1].healthy++;
             }
           } else {
-            //@ts-ignore
             if (animal.condition.phase == 1) {
               //@ts-ignore
               ageCounts[animal.age - 1].sickFirstPhase++;
