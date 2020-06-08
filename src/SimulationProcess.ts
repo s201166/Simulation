@@ -8,41 +8,39 @@ export class SimulationProcess {
       animals
     );
 
-    const birth = animals.map((animal) => {
-      return animal.pregnantPhase === 2
-        ? Simulate.birth(sickAnimalsSortedByAge, animal)
-        : animal;
-    });
-    //@ts-ignore
-    const afterFlat = birth.flat(2);
+    const birth = animals
+      .map((animal) => {
+        return animal.pregnantPhase === 2
+          ? Simulate.birth(sickAnimalsSortedByAge, animal)
+          : animal;
+      })
+      .flat(2);
 
-    const recovery = afterFlat.map((animal) => {
-      return animal.condition.health === "sick" && animal.condition.phase === 2
-        ? Simulate.recovery(animal)
-        : animal;
-    });
+    const recovery = birth
+      .map((animal) => {
+        return animal.condition.health === "sick" &&
+          animal.condition.phase === 2
+          ? Simulate.recovery(animal)
+          : animal;
+      })
+      .flat();
 
-    const flatRecovery = recovery.flat();
+    const naturalDeath = recovery
+      .map((animal) => {
+        return Simulate.naturalDeath(animal);
+      })
+      .flat();
 
-    const naturalDeath = flatRecovery.map((animal) => {
-      return Simulate.naturalDeath(animal);
-    });
-
-    const flatNaturalDeath = naturalDeath.flat();
-
-    const onTimePasses = flatNaturalDeath.map((animal) => {
+    const onTimePasses = naturalDeath.map((animal) => {
       return Simulate.onTimePasses(animal);
     });
-    const flatOnTimePasses = onTimePasses.flat();
 
-    const pregnancy = flatOnTimePasses.map((animal) => {
+    const pregnancy = onTimePasses.map((animal) => {
       return Simulate.getPregnant(animal);
     });
 
-    const flatternPregnancy = pregnancy.flat();
+    DisplayData.formatSimulationResult(pregnancy);
 
-    DisplayData.formatSimulationResult(flatternPregnancy);
-
-    return flatternPregnancy;
+    return pregnancy;
   };
 }

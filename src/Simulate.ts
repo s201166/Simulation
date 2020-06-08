@@ -32,7 +32,7 @@ export class Simulate {
       else data.push(new Animal(0, { health: "healthy", immune: 0 }, 0));
     } else data.push(new Animal(0, { health: "healthy", immune: 0 }, 0));
 
-    return [...data];
+    return data;
   }
 
   static getPregnant(animal: AnimalType) {
