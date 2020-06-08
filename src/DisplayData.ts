@@ -1,33 +1,34 @@
 import { AnimalType } from "./Animal";
 
+type AggregationType = {
+  age: number;
+  healthy: number;
+  healthyAndImmune: number;
+  sickFirstPhase: number;
+  sickSecondPhase: number;
+};
+
 export class DisplayData {
-  static formatSimulationResult = (arr: any) => {
+  static formatSimulationResult = (animals: AnimalType[]) => {
     console.table(
-      arr.reduce(
-        function (ageCounts: { [key: string]: number }, animal: AnimalType) {
+      animals.reduce(
+        (aggregateData: AggregationType[], animal: AnimalType) => {
           // 0 -> immune == false
           // 1 -> just got it == false
           // 2 -> immune == true
-          if (animal.condition.health === "healthy") {
-            if (animal.condition.immune == 2) {
-              //@ts-ignore
-              ageCounts[animal.age - 1].healthyAndImmune++;
-            }
 
-            if (animal.condition.immune == 0) {
-              //@ts-ignore
-              ageCounts[animal.age - 1].healthy++;
-            }
+          if (animal.condition.health === "healthy") {
+            if (animal.condition.immune === 2)
+              aggregateData[animal.age - 1].healthyAndImmune++;
+
+            if (animal.condition.immune === 0)
+              aggregateData[animal.age - 1].healthy++;
           } else {
-            if (animal.condition.phase == 1) {
-              //@ts-ignore
-              ageCounts[animal.age - 1].sickFirstPhase++;
-            } else {
-              //@ts-ignore
-              ageCounts[animal.age - 1].sickSecondPhase++;
-            }
+            if (animal.condition.phase === 1)
+              aggregateData[animal.age - 1].sickFirstPhase++;
+            else aggregateData[animal.age - 1].sickSecondPhase++;
           }
-          return ageCounts;
+          return aggregateData;
         },
         [
           {

@@ -1,14 +1,18 @@
 import { Animal, AnimalType } from "./Animal";
 
+type AgesType = {
+  [key: string]: number;
+};
+
 export class Simulate {
-  static random = (min: number, max: number) => {
-    return Math.random() * (max - min) + min;
-  };
+  static random = (min: number, max: number) =>
+    Math.random() * (max - min) + min;
+
   static probability = (n: number) => Math.random() < n;
 
   static getAmountOfSickAnimalsInSameAge(animals: AnimalType[]) {
     return animals.reduce(
-      function (ageCounts: { [key: string]: number }, animal) {
+      (ageCounts: AgesType, animal) => {
         if (animal.condition.health === "sick") ageCounts[animal.age]++;
 
         return ageCounts;
@@ -17,12 +21,12 @@ export class Simulate {
     );
   }
 
-  static birth(ages: any, animal: AnimalType) {
+  static birth(ages: AgesType, animal: AnimalType) {
     const data = [
       new Animal(animal.age, animal.condition, (animal.pregnantPhase = 0)),
     ];
 
-    if (animal.condition.health === "healthy") {
+    if (animal.condition.health === "sick") {
       if (Simulate.probability(ages[animal.age] * 0.01))
         data.push(new Animal(0, { health: "sick", phase: 1 }, 0));
       else data.push(new Animal(0, { health: "healthy", immune: 0 }, 0));
@@ -90,16 +94,13 @@ export class Simulate {
     if (pregnantPhase > 0) pregnantPhase++;
 
     if (animal.condition.health === "healthy") {
-      let immune = animal.condition.immune;
-
-      if (immune == 1)
-        return new Animal(
-          age,
-          { health: "healthy", immune: immune + 1 },
-          pregnantPhase
-        );
-
-      return new Animal(age, { health: "healthy", immune: 0 }, pregnantPhase);
+      return animal.condition.immune === 1
+        ? new Animal(
+            age,
+            { health: "healthy", immune: animal.condition.immune + 1 },
+            pregnantPhase
+          )
+        : new Animal(age, { health: "healthy", immune: 0 }, pregnantPhase);
     } else
       return new Animal(
         age,
